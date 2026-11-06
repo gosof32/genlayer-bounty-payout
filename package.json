@@ -1,0 +1,14 @@
+{
+  "name": "genlayer-bounty-payout",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test:contract": "pytest",
+    "lifecycle:setup": "node scripts/lifecycle-studionet.mjs setup",
+    "lifecycle:judge": "node scripts/lifecycle-studionet.mjs judge"
+  },
+  "dependencies": {
+    "genlayer-js": "1.1.8"
+  }
+}
