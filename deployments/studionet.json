@@ -1,0 +1,410 @@
+{
+  "network": "studionet",
+  "rpc": "https://studio.genlayer.com/api",
+  "contract": "0xFb2372a7325F63Bb4f0a3330C075e9F58Fe7466A",
+  "generated_at": "2026-11-06T07:32:47.669Z",
+  "bounty_repo": "gosof32/genlayer-bounty-payout",
+  "issue": "https://github.com/gosof32/genlayer-bounty-payout/issues/1",
+  "pr": "https://github.com/gosof32/genlayer-bounty-payout/pull/2",
+  "accounts": {
+    "sponsor": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+    "hunter": "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+    "outsider": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D"
+  },
+  "summary": {
+    "total": 17,
+    "finalized": 17,
+    "majority_agree": 17,
+    "success": 10,
+    "expected_reverts": 7,
+    "all_as_expected": true
+  },
+  "transactions": [
+    {
+      "label": "deploy contract",
+      "phase": "setup",
+      "hash": "0x2825906beeb8d695db9bc9e53a211743925bbfbd4305f45399d8c466dc7136a5",
+      "from": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "null",
+      "expected_ok": true
+    },
+    {
+      "label": "create_bounty #1 gosof32/genlayer-bounty-payout#1 (100 units, 3 criteria)",
+      "phase": "setup",
+      "hash": "0xce1ba41bdf36e9e7dc9adb303ed2da904ae9be92b983535f89ea7b55b5547b10",
+      "from": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "1",
+      "expected_ok": true
+    },
+    {
+      "label": "create_bounty #2 (refund demo, deadline +4 min)",
+      "phase": "setup",
+      "hash": "0x8b8c2c92dd12661c41da0861f7e3218b93941b24be62c20fe99524c1b7e1d104",
+      "from": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "2",
+      "expected_ok": true
+    },
+    {
+      "label": "create_bounty #3 (cancel demo)",
+      "phase": "setup",
+      "hash": "0xf9f69ab4672453012b4b35d683cb4b8ce4ab75c939873d7d82500d41685b101f",
+      "from": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "3",
+      "expected_ok": true
+    },
+    {
+      "label": "create_bounty with no reward (must be rejected)",
+      "phase": "setup",
+      "hash": "0x51744e415012cb34cd073e4b193e192c8b253490682d8bb1b8b36e245d08eb1a",
+      "from": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "ok": false,
+      "returnValue": "[INVALID] send the reward as the call value",
+      "expected_ok": false
+    },
+    {
+      "label": "cancel_bounty #3 by outsider (must be rejected)",
+      "phase": "setup",
+      "hash": "0x3b341629ad67f7ffe38d6525a2f1e178060d53ebd473c58a1d75be4ff309d39d",
+      "from": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "ok": false,
+      "returnValue": "[FORBIDDEN] only the sponsor can cancel",
+      "expected_ok": false
+    },
+    {
+      "label": "cancel_bounty #3 by sponsor (no claim pending)",
+      "phase": "setup",
+      "hash": "0x32fcef94da98f80285046b36df37bb8cb30db2a531348b6a8957801bbf833ca2",
+      "from": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "25000000",
+      "expected_ok": true
+    },
+    {
+      "label": "refund #2 before deadline (must be rejected)",
+      "phase": "setup",
+      "hash": "0x6124ddfda8f62665be0b651bb67b1e3516fdb90f490f8ea53546bad715e431c5",
+      "from": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "ok": false,
+      "returnValue": "[NOT_READY] deadline has not passed",
+      "expected_ok": false
+    },
+    {
+      "label": "submit_claim #1 by outsider on https://github.com/gosof32/genlayer-bounty-payout/pull/2 (squatting someone else's PR)",
+      "phase": "judge",
+      "hash": "0xda60c2e17041cd3c65d1dc40450da4c1ac5d577224b7396cb243f16ffdbe7c56",
+      "from": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "1",
+      "expected_ok": true
+    },
+    {
+      "label": "judge outsider claim (validators read GitHub; expect REJECTED: MISSING_AUTHORSHIP)",
+      "phase": "judge",
+      "hash": "0xc67adad7a1f4e18c7bcd1c65fa8d3aedbcc631a0c068a2e89c4a58d2a5490c00",
+      "from": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "{\"attempts_left\":1\"codes\":[\"MISSING_AUTHORSHIP\",]\"criteria\":[]\"status\":\"REJECTED\"}",
+      "expected_ok": true
+    },
+    {
+      "label": "submit_claim #1 by hunter (PR 2)",
+      "phase": "judge",
+      "hash": "0x5783be5b2b0236113d1c4e6ea6e28d2bed5f8325429e68a3362f8a8802ca1741",
+      "from": "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "2",
+      "expected_ok": true
+    },
+    {
+      "label": "cancel_bounty #1 while hunter claim is pending (must be rejected)",
+      "phase": "judge",
+      "hash": "0x0c49b52f7e270146b696bd27be96b1f46b51d50de9433e9433d374db81eb7a83",
+      "from": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "ok": false,
+      "returnValue": "[LOCKED] a claim is still pending; it must be judged out first",
+      "expected_ok": false
+    },
+    {
+      "label": "judge hunter claim (validators read GitHub + grade 3 criteria; expect ACCEPTED)",
+      "phase": "judge",
+      "hash": "0xdfd51fbbb3f1e602f434cc31bd975fc8726ebed565525c3920b6dc3b359cf179",
+      "from": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "{\"criteria\":[{\"pass\":true\"reason\":\"CONTRIBUTING.md is added at the repository root.\"},{\"pass\":true\"reason\":\"Explains installation of dev requirements and running direct-mode tests with pytest.\"},{\"pass\":true\"reason\":\"Explains how to run the Studionet lifecycle script (setup and judge).\"},]\"hunter\":\"0xC27F966F8Dd499017dC5b17B2203013163b474a4\"\"paid\":100000000\"pr_author\":\"gosof32\"\"status\":\"ACCEPTED\"}",
+      "expected_ok": true
+    },
+    {
+      "label": "judge hunter claim again (must be rejected: bounty PAID)",
+      "phase": "judge",
+      "hash": "0xe612c72ff10dd931994aede46bc972f5c13714e74982a26ca76939a75b2a1863",
+      "from": "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "ok": false,
+      "returnValue": "[CLOSED] bounty is PAID",
+      "expected_ok": false
+    },
+    {
+      "label": "cancel_bounty #1 after payout (must be rejected)",
+      "phase": "judge",
+      "hash": "0xa1862582900d31cee72b62067a4fa733ee4e63f21a8c29858e2a6593d648830b",
+      "from": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "ok": false,
+      "returnValue": "[CLOSED] bounty is PAID",
+      "expected_ok": false
+    },
+    {
+      "label": "refund #1 after payout (must be rejected)",
+      "phase": "judge",
+      "hash": "0x2c4e734f9b87a033f172a9753aaae01b78b38b5b715aec5ff0ee53a00f5d5a06",
+      "from": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "ok": false,
+      "returnValue": "[CLOSED] bounty is PAID",
+      "expected_ok": false
+    },
+    {
+      "label": "refund #2 after deadline, no claims (anyone may call; pays the sponsor)",
+      "phase": "judge",
+      "hash": "0x700d5004ed26e849f2647bc934907f77e9d0e76f561b6fa57aafef34d5ad44ea",
+      "from": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "ok": true,
+      "returnValue": "50000000",
+      "expected_ok": true
+    }
+  ],
+  "contract_value_transfers": [
+    {
+      "hash": "0x0d893b1405fb09902a35d891908dc4a8e15993577bb6d60549fcfa49888c26b5",
+      "from": "0xFb2372a7325F63Bb4f0a3330C075e9F58Fe7466A",
+      "to": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "value": 25000000,
+      "status": "FINALIZED",
+      "meaning": "cancel_bounty #3: reward back to sponsor"
+    },
+    {
+      "hash": "0x70075a1b0acfc7135ca6c698b4476bc9671ca341d2052943518f703348cbb974",
+      "from": "0xFb2372a7325F63Bb4f0a3330C075e9F58Fe7466A",
+      "to": "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+      "value": 100000000,
+      "status": "FINALIZED",
+      "meaning": "bounty #1 payout to hunter"
+    },
+    {
+      "hash": "0x9ee7699657215178b7cdc87585bc0d082836e1ea307e29aeeac2808bf251b88e",
+      "from": "0xFb2372a7325F63Bb4f0a3330C075e9F58Fe7466A",
+      "to": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "value": 50000000,
+      "status": "FINALIZED",
+      "meaning": "refund #2: reward back to sponsor"
+    }
+  ],
+  "funding": [
+    {
+      "hash": "0x9f43d05356a555e657555ccbc3580bc0eaedc783aa88c8c485d550c83997041b",
+      "to": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+      "value": 1000000000000,
+      "status": "FINALIZED",
+      "meaning": "sim_fundAccount (throwaway key)"
+    },
+    {
+      "hash": "0x3f6e934a274aec6cbf49241ec1eca49fdc910d9659937bcaccdcc45621534722",
+      "to": "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+      "value": 1000000000000,
+      "status": "FINALIZED",
+      "meaning": "sim_fundAccount (throwaway key)"
+    },
+    {
+      "hash": "0x30d48bcdf3e2887b2a7c6e7057bbc8ec06040c092628c3a2858a939b67bf8eb1",
+      "to": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+      "value": 1000000000000,
+      "status": "FINALIZED",
+      "meaning": "sim_fundAccount (throwaway key)"
+    }
+  ],
+  "notes": [
+    "Setup-phase records were rebuilt from chain (sim_getTransactionsForAddress + receipts) after a script bug dropped them from this file; the bug is fixed in scripts/lifecycle-studionet.mjs.",
+    "An earlier setup attempt deployed 0xd2c4bef0281cd3E021469CcAF51837c03e234ae9 and created one bounty before a Studionet RPC error (HTML response) aborted it. It holds no claims and is not used."
+  ],
+  "final_state": {
+    "bounties": [
+      {
+        "claim_count": 2,
+        "closed_at": "2026-11-06T07:29:24Z",
+        "created_at": "2026-11-06T07:22:17Z",
+        "criteria": [
+          "Adds a CONTRIBUTING.md file at the repository root",
+          "CONTRIBUTING.md explains how to install the dev requirements and run the direct-mode tests with pytest",
+          "CONTRIBUTING.md explains how to run the Studionet lifecycle script"
+        ],
+        "deadline": "2026-11-06T10:22:16Z",
+        "has_live_claim": false,
+        "id": 1,
+        "issue": 1,
+        "issue_url": "https://github.com/gosof32/genlayer-bounty-payout/issues/1",
+        "judge_deadline": "2026-11-06T13:22:16Z",
+        "max_attempts": 2,
+        "max_claims": 3,
+        "repo": "gosof32/genlayer-bounty-payout",
+        "reward": 100000000,
+        "sponsor": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+        "status": "PAID",
+        "title": "Add a CONTRIBUTING guide",
+        "winner_claim": 2
+      },
+      {
+        "claim_count": 0,
+        "closed_at": "2026-11-06T07:32:07Z",
+        "created_at": "2026-11-06T07:22:52Z",
+        "criteria": [
+          "Adds a CONTRIBUTING.md file"
+        ],
+        "deadline": "2026-11-06T07:26:16Z",
+        "has_live_claim": false,
+        "id": 2,
+        "issue": 1,
+        "issue_url": "https://github.com/gosof32/genlayer-bounty-payout/issues/1",
+        "judge_deadline": "2026-11-06T07:26:16Z",
+        "max_attempts": 1,
+        "max_claims": 3,
+        "repo": "gosof32/genlayer-bounty-payout",
+        "reward": 50000000,
+        "sponsor": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+        "status": "REFUNDED",
+        "title": "Refund demo: nobody claims this",
+        "winner_claim": 0
+      },
+      {
+        "claim_count": 0,
+        "closed_at": "2026-11-06T07:25:12Z",
+        "created_at": "2026-11-06T07:23:27Z",
+        "criteria": [
+          "Adds a CONTRIBUTING.md file"
+        ],
+        "deadline": "2026-11-07T07:22:16Z",
+        "has_live_claim": false,
+        "id": 3,
+        "issue": 1,
+        "issue_url": "https://github.com/gosof32/genlayer-bounty-payout/issues/1",
+        "judge_deadline": "2026-11-07T07:22:16Z",
+        "max_attempts": 1,
+        "max_claims": 3,
+        "repo": "gosof32/genlayer-bounty-payout",
+        "reward": 25000000,
+        "sponsor": "0xc083933576e30d24AD6c16658e78a4d124c82aac",
+        "status": "CANCELLED",
+        "title": "Cancel demo",
+        "winner_claim": 0
+      }
+    ],
+    "claims": [
+      {
+        "attempts": 1,
+        "attempts_left": 1,
+        "bounty_id": 1,
+        "codes": [
+          "MISSING_AUTHORSHIP"
+        ],
+        "criteria_results": [],
+        "evidence_hash": "0c1027e0e4fdf56533376c06201e400c24b972513cd2b0d2c66ee575117130b3",
+        "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+        "hunter": "0x52B090BD9511874811D095e1e581CCb7Dc474F2D",
+        "id": 1,
+        "judged_at": "2026-11-06T07:27:36Z",
+        "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+        "merged_at": "2026-11-06T07:24:12Z",
+        "paid": 0,
+        "pr_author": "gosof32",
+        "pr_number": 2,
+        "pr_url": "https://github.com/gosof32/genlayer-bounty-payout/pull/2",
+        "status": "SUPERSEDED",
+        "submitted_at": "2026-11-06T07:27:01Z"
+      },
+      {
+        "attempts": 1,
+        "attempts_left": 1,
+        "bounty_id": 1,
+        "codes": [],
+        "criteria_results": [
+          {
+            "pass": true,
+            "reason": "CONTRIBUTING.md is added at the repository root."
+          },
+          {
+            "pass": true,
+            "reason": "Explains installation of dev requirements and running direct-mode tests with pytest."
+          },
+          {
+            "pass": true,
+            "reason": "Explains how to run the Studionet lifecycle script (setup and judge)."
+          }
+        ],
+        "evidence_hash": "8e4b6c9494bf44e86e7169c0c90e59706cc8de000af7634bd050b66d100abceb",
+        "head_sha": "fb4ba7ef81fe671e8494082ffc705559cc477dd2",
+        "hunter": "0xC27F966F8Dd499017dC5b17B2203013163b474a4",
+        "id": 2,
+        "judged_at": "2026-11-06T07:29:24Z",
+        "merge_sha": "b80824e68ae763f2ee42b5fe1ff22b95b7eaf0ed",
+        "merged_at": "2026-11-06T07:24:12Z",
+        "paid": 100000000,
+        "pr_author": "gosof32",
+        "pr_number": 2,
+        "pr_url": "https://github.com/gosof32/genlayer-bounty-payout/pull/2",
+        "status": "ACCEPTED",
+        "submitted_at": "2026-11-06T07:28:14Z"
+      }
+    ]
+  }
+}

@@ -50,6 +50,17 @@ function describe(receipt) {
   return { status, consensus, execution, ok: execution === "SUCCESS", returnValue };
 }
 
+// Studionet's RPC occasionally answers with an HTML error page; retry transient failures.
+async function retry(fn, tries = 8) {
+  for (let i = 1; ; i++) {
+    try { return await fn(); } catch (e) {
+      if (i >= tries) throw e;
+      process.stdout.write(`(rpc retry ${i}: ${String(e.shortMessage || e.message).slice(0, 60)}) `);
+      await sleep(5000 * i);
+    }
+  }
+}
+
 function save(extra = {}) {
   fs.mkdirSync(new URL("../deployments/", import.meta.url), { recursive: true });
   Object.assign(state, extra, { network: "studionet", rpc: "https://studio.genlayer.com/api", generated_at: new Date().toISOString() });
@@ -58,8 +69,8 @@ function save(extra = {}) {
 
 async function step(label, account, fn, expectOk = true, expectText = null) {
   process.stdout.write(`- ${label} ... `);
-  const hash = await fn(account);
-  const receipt = await client.waitForTransactionReceipt({ hash, ...WAIT });
+  const hash = await retry(() => fn(account));
+  const receipt = await retry(() => client.waitForTransactionReceipt({ hash, ...WAIT }));
   const d = describe(receipt);
   log.push({ label, phase: PHASE, hash, from: account.address, ...d, expected_ok: expectOk });
   save();
@@ -85,9 +96,9 @@ if (PHASE === "setup") {
   fs.writeFileSync(KEYS, JSON.stringify(keys, null, 2));
   const [sponsor, hunter, outsider] = [keys.sponsor, keys.hunter, keys.outsider].map((k) => createAccount(k));
   for (const a of [sponsor, hunter, outsider]) {
-    await client.request({ method: "sim_fundAccount", params: [a.address, 1_000_000_000_000] });
+    await retry(() => client.request({ method: "sim_fundAccount", params: [a.address, 1_000_000_000_000] }));
   }
-  state.transactions = [];
+  // fresh run: clear the shared log array in place (state.transactions points at it)
   log.length = 0;
   const code = fs.readFileSync(new URL("../contracts/bounty_payout.py", import.meta.url), "utf8");
   const deploy = await step("deploy contract", sponsor, (account) => client.deployContract({ account, code, args: [] }));
@@ -138,7 +149,7 @@ if (PHASE === "setup") {
   await step("cancel_bounty #1 after payout (must be rejected)", sponsor, write(address, "cancel_bounty", [1]), false);
   await step("refund #1 after payout (must be rejected)", outsider, write(address, "refund", [1]), false);
 
-  const b2 = await read(address, "get_bounty", [2]);
+  const b2 = await retry(() => read(address, "get_bounty", [2]));
   const wait = new Date(json(b2).deadline ?? json(b2).get?.("deadline")).getTime() - Date.now() + 20_000;
   if (wait > 0) { console.log(`  waiting ${Math.ceil(wait / 1000)}s for bounty #2 deadline...`); await sleep(wait); }
   await step("refund #2 after deadline, no claims (anyone may call; pays the sponsor)", outsider, write(address, "refund", [2]));
